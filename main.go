@@ -61,12 +61,15 @@ func main() {
 
 	// initialize repositories
 	cityRepository := repository.NewCityRepository(database.Db)
+	landmarkRepository := repository.NewLandmarkRepository(database.Db)
 
 	// initialize services
 	cityService := service.NewCityService(validation.Validator, cityRepository)
+	landmarkService := service.NewLandmarkService(validation.Validator, cityRepository, landmarkRepository)
 
 	// register handlers
 	handlers.RegisterCityHandlers(api, cityService)
+	handlers.RegisterLandmarksHandler(api, landmarkService)
 
 	app.Listen(":3000")
 }
