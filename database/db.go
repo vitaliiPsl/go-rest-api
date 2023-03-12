@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/vitaliiPsl/go-rest-api/model"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -20,4 +21,7 @@ func init() {
 	}
 
 	log.Println("Connected to the database")
+
+	Db.AutoMigrate(&model.City{})
+	log.Println("Migrated models")
 }
