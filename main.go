@@ -1,8 +1,8 @@
 package main
 
-import "log"
-
 import (
+	"log"
+
 	_ "github.com/joho/godotenv/autoload"
 )
 

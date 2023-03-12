@@ -8,4 +8,4 @@ services:
     environment:
       POSTGRES_USER: dev
       POSTGRES_PASSWORD: dev123
-      POSTGRES_DB: db
+      POSTGRES_DB: exploration
