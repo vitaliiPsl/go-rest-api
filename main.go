@@ -8,6 +8,11 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	_ "github.com/joho/godotenv/autoload"
+	"github.com/vitaliiPsl/go-rest-api/database"
+	"github.com/vitaliiPsl/go-rest-api/handlers"
+	"github.com/vitaliiPsl/go-rest-api/repository"
+	"github.com/vitaliiPsl/go-rest-api/service"
+	"github.com/vitaliiPsl/go-rest-api/validation"
 )
 
 // new JSON error handler
@@ -50,6 +55,18 @@ func main() {
 			"message": "Up and running",
 		})
 	})
+
+	// create api router
+	api := app.Group("/api/")
+
+	// initialize repositories
+	cityRepository := repository.NewCityRepository(database.Db)
+
+	// initialize services
+	cityService := service.NewCityService(validation.Validator, cityRepository)
+
+	// register handlers
+	handlers.RegisterCityHandlers(api, cityService)
 
 	app.Listen(":3000")
 }
