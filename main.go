@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"log"
+	"os"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -74,5 +75,5 @@ func main() {
 	handlers.RegisterAirportsHandler(api, airportService)
 	handlers.RegisterLandmarksHandler(api, landmarkService)
 
-	app.Listen(":3000")
+	log.Fatal(app.Listen(":" + os.Getenv("PORT")))
 }
