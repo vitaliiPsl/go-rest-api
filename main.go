@@ -5,6 +5,8 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	_ "github.com/joho/godotenv/autoload"
 )
 
@@ -25,8 +27,24 @@ func errorHandler(c *fiber.Ctx, err error) error {
 func main() {
 	log.Println("Go rest api")
 
+	// new fiber instance configured to use JSON error handler
 	app := fiber.New(fiber.Config{ErrorHandler: errorHandler})
 
+	// enable cors
+	app.Use(cors.New())
+
+	// register logger
+	app.Use(logger.New(logger.Config{
+		Format: "[${ip}]:${port} ${status} - ${method} ${path}\n",
+	}))
+
+	// set content type to JSON
+	app.Use(func(c *fiber.Ctx) error {
+		c.Set(fiber.HeaderContentType, fiber.MIMEApplicationJSON)
+		return c.Next()
+	})
+
+	// health endpoint
 	app.Get("/health", func(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{
 			"message": "Up and running",
