@@ -22,6 +22,6 @@ func init() {
 
 	log.Println("Connected to the database")
 
-	Db.AutoMigrate(&model.City{}, &model.Landmark{})
+	Db.AutoMigrate(&model.City{}, &model.Landmark{}, &model.Airport{})
 	log.Println("Migrated models")
 }

@@ -8,4 +8,5 @@ type City struct {
 	Geolat    float32
 	Geolng    float32
 	Landmarks []Landmark `gorm:"foreignkey:CityId;constraint:OnDelete:CASCADE"`
+	Airports  []Airport  `gorm:"foreignkey:CityId;constraint:OnDelete:CASCADE"`
 }
